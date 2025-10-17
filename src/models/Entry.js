@@ -8,7 +8,7 @@ const entrySchema = new mongoose.Schema({
   mobile: { type: String, required: true },
   email: { type: String, required: true, lowercase: true, trim: true },
   address: { type: String, required: true, trim: true },
-  ReferralCode : {type: String},
+  referralCode : {type: String},
   amount: { type: Number, required: true, enum: [10, 30, 50] },
   transactionId: { type: String, required: true, trim: true },
   paid: { type: Boolean, default: true }, // placeholder for future payment recon

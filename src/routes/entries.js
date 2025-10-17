@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
       mobile: fullPayload.mobile,
       email: fullPayload.email,
       address: fullPayload.address,
-      ReferralCode: fullPayload.ReferralCode,
+      referralCode: fullPayload.referralCode,
       amount: Number(fullPayload.amount),
       transactionId: fullPayload.transactionId,
       paid: true

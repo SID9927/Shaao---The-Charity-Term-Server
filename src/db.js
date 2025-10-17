@@ -1,9 +1,13 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-export async function connectDB(uri) {
-  mongoose.set('strictQuery', true);
-  await mongoose.connect(uri, {
-    autoIndex: true
-  });
-  console.log('MongoDB connected');
-}
+export const connectDB = async () => {
+  try {
+    const conn = await mongoose.connect(process.env.MONGODB_URI, {
+      serverSelectionTimeoutMS: 10000,
+    });
+    console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+  } catch (err) {
+    console.error("❌ Failed to connect DB", err);
+    process.exit(1);
+  }
+};

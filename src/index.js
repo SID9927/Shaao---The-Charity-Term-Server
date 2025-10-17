@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import { connectDB } from './db.js';
 import { router as entriesRouter } from './routes/entries.js';
 import { router as sendEmailRouter } from './routes/email.js';
+import adminRouter from './routes/admin.js';
 
 dotenv.config();
 
@@ -27,6 +28,7 @@ app.get('/health', (_, res) => res.json({ ok: true }));
 // Routes
 app.use('/api/entries', entriesRouter);
 app.use('/api/send-email', sendEmailRouter);
+app.use('/api/admin', adminRouter);
 
 // Connect to MongoDB and start server
 connectDB(process.env.MONGODB_URI)

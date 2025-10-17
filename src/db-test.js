@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
-const uri = "mongodb+srv://dsid952_db_user:TsWhWHXW4QOxJ8iC@cluster0.g3200hq.mongodb.net/lottery_app?retryWrites=true&w=majority";
+const uri = "mongodb+srv://shaao_admin:mJj202gaqriUvwti@cluster0.lvtev9k.mongodb.net/Shaao-TheCharityTerm?retryWrites=true&w=majority
+";
 
 mongoose.connect(uri)
   .then(() => {
