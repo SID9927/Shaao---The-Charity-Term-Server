@@ -1,39 +1,28 @@
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-// console.log('EMAIL_HOST:', process.env.EMAIL_HOST);
-// console.log('EMAIL_USER:', process.env.EMAIL_USER);
-// console.log('EMAIL_PASS:', process.env.EMAIL_PASS);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST,
-  port: process.env.EMAIL_PORT || 587,
-  secure: false, // use TLS, not SSL
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
-
-// Verify SMTP connection on startup
-transporter.verify((err, success) => {
-  if (err) {
-    console.error('Mailer Error:', err);
-  } else {
-    console.log('Mailer ready to send emails');
-  }
-});
+// Verify that key exists
+if (!process.env.RESEND_API_KEY) {
+  console.error('❌ RESEND_API_KEY not found in environment variables');
+}
 
 export async function sendMail({ to, subject, text, html }) {
-  const mailOptions = {
-    from: `"Shaao - The Charity Term" <${process.env.EMAIL_USER}>`,
-    to,
-    subject,
-    text,
-    html, // optional
-  };
+  try {
+    const data = await resend.emails.send({
+      from: 'Shaao <onboarding@resend.dev>', // default sender
+      to,
+      subject,
+      html: html || `<p>${text}</p>`,
+    });
 
-  return transporter.sendMail(mailOptions);
+    console.log('✅ Email sent successfully:', data);
+    return data;
+  } catch (error) {
+    console.error('❌ Resend Email Error:', error);
+    throw error;
+  }
 }
