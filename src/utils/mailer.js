@@ -8,9 +8,9 @@ dotenv.config();
 // console.log('EMAIL_PASS:', process.env.EMAIL_PASS);
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 465,
-    secure: true,
+  host: process.env.EMAIL_HOST,
+  port: process.env.EMAIL_PORT || 587,
+  secure: false, // use TLS, not SSL
   auth: {
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
@@ -28,7 +28,7 @@ transporter.verify((err, success) => {
 
 export async function sendMail({ to, subject, text, html }) {
   const mailOptions = {
-    from: `"Lottery App" <${process.env.EMAIL_USER}>`,
+    from: `"Shaao - The Charity Term" <${process.env.EMAIL_USER}>`,
     to,
     subject,
     text,
